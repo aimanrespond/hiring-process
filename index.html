@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>respond.io — Hiring Process</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1116;
+    --panel:#161b24;
+    --ink:#e8edf5;
+    --muted:#9aa6b8;
+    --line:#2a3240;
+    --define:#6366f1;
+    --screen:#0ea5a4;
+    --interview:#f59e0b;
+    --offer:#22c55e;
+    --reject:#ef4444;
+    --accent:#a78bfa;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    background:radial-gradient(1200px 600px at 15% -10%, #1a2030 0%, var(--bg) 55%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    padding:32px 24px 60px;
+  }
+  .wrap{max-width:1240px;margin:0 auto}
+  header.top{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:6px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#6366f1,#22c55e);display:grid;place-items:center;font-weight:800;color:#fff;box-shadow:var(--shadow)}
+  h1{font-size:26px;font-weight:800;margin:0;letter-spacing:-.4px}
+  .sub{color:var(--muted);font-size:14px;margin-top:3px}
+  .tag{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+
+  /* phase ribbon */
+  .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 8px}
+  .phase-head{border-radius:14px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);position:relative;overflow:hidden}
+  .phase-head .num{font-size:12px;font-weight:700;letter-spacing:1.5px;opacity:.85}
+  .phase-head h2{margin:4px 0 2px;font-size:18px;font-weight:800}
+  .phase-head p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
+  .phase-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px}
+  .p1::before{background:var(--define)} .p2::before{background:var(--screen)}
+  .p3::before{background:var(--interview)} .p4::before{background:var(--offer)}
+
+  /* columns of steps */
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+  .col{display:flex;flex-direction:column;gap:14px}
+  .step{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:13px 14px;cursor:pointer;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
+    position:relative;
+  }
+  .step:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .step.active{box-shadow:var(--shadow)}
+  .step .ico{font-size:18px}
+  .step .t{font-size:14px;font-weight:700;margin:6px 0 3px;line-height:1.25}
+  .step .d{font-size:12px;color:var(--muted);line-height:1.45}
+  .step .pill{display:inline-block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+  .c1 .step.active,.c1 .step:hover{border-color:var(--define)}
+  .c2 .step.active,.c2 .step:hover{border-color:var(--screen)}
+  .c3 .step.active,.c3 .step:hover{border-color:var(--interview)}
+  .c4 .step.active,.c4 .step:hover{border-color:var(--offer)}
+  .pill.b1{background:rgba(99,102,241,.16);color:#b3b6ff}
+  .pill.b2{background:rgba(14,165,164,.16);color:#7ff0ee}
+  .pill.b3{background:rgba(245,158,11,.16);color:#ffd591}
+  .pill.b4{background:rgba(34,197,94,.16);color:#9af5bc}
+
+  .connector{height:14px;display:grid;place-items:center;color:var(--muted)}
+  .connector svg{opacity:.5}
+
+  /* decision / branch note */
+  .branch{
+    border:1px dashed var(--interview);background:rgba(245,158,11,.07);
+    border-radius:12px;padding:11px 13px;font-size:11.5px;color:#ffd591;line-height:1.5
+  }
+  .branch b{color:#ffe6b8}
+
+  .ai{
+    border:1px solid var(--accent);background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(99,102,241,.08));
+    border-radius:14px;padding:13px 14px;position:relative
+  }
+  .ai .t{color:#d9ccff}
+  .ai .spark{position:absolute;top:-9px;right:12px;background:var(--accent);color:#1b1430;font-size:10px;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.5px}
+
+  /* rejection lane */
+  .reject-lane{
+    margin-top:22px;border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.06);
+    border-radius:16px;padding:16px 18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap
+  }
+  .reject-lane .badge{display:flex;align-items:center;gap:10px;font-weight:800;color:#ffb4b4;font-size:14px;white-space:nowrap}
+  .reject-lane .dot{width:11px;height:11px;border-radius:50%;background:var(--reject);box-shadow:0 0 0 4px rgba(239,68,68,.18)}
+  .reject-lane .flow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:12.5px}
+  .reject-lane .chip{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#ffd0d0;padding:6px 11px;border-radius:10px;font-weight:600}
+  .arrow{color:var(--reject);font-weight:800}
+
+  /* detail panel */
+  .detail{
+    margin-top:22px;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+    padding:18px 20px;min-height:64px;transition:border-color .2s ease
+  }
+  .detail .dt{font-size:15px;font-weight:800;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+  .detail .dd{font-size:13.5px;color:var(--muted);line-height:1.6;margin:0}
+  .detail .hint{color:var(--muted);font-size:13px;font-style:italic}
+
+  footer{margin-top:26px;color:var(--muted);font-size:11.5px;text-align:center}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:12px;font-size:11.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+  @media (max-width:920px){
+    .phases,.board{grid-template-columns:1fr}
+    .board .col{margin-bottom:6px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">r</div>
+      <div>
+        <h1>How respond.io Hires</h1>
+        <div class="sub">A structured, AI-accelerated pipeline — from open role to onboarding.</div>
+      </div>
+    </div>
+    <div class="tag">Click any step for detail →</div>
+  </header>
+
+  <!-- phase ribbon -->
+  <div class="phases">
+    <div class="phase-head p1"><div class="num" style="color:var(--define)">PHASE 01</div><h2>Define the Role</h2><p>Surface the need, understand the why, and document exactly what "great" looks like.</p></div>
+    <div class="phase-head p2"><div class="num" style="color:var(--screen)">PHASE 02</div><h2>Screen</h2><p>Skills, researched industry fit &amp; culture — Claude AI accelerates, humans verify.</p></div>
+    <div class="phase-head p3"><div class="num" style="color:var(--interview)">PHASE 03</div><h2>Interview</h2><p>Layered evaluation: people, skills, and leadership sign-off.</p></div>
+    <div class="phase-head p4"><div class="num" style="color:var(--offer)">PHASE 04</div><h2>Offer &amp; Close</h2><p>Align, approve, offer, sign, onboard.</p></div>
+  </div>
+
+  <!-- board -->
+  <div class="board">
+    <!-- COLUMN 1 -->
+    <div class="col c1">
+      <div class="step" data-t="Identify the need" data-c="define" data-d="Two entry points: a hiring manager raises a request, or a TA Partner proactively spots a need and proposes the role.">
+        <div class="ico">🎯</div><div class="t">Need identified</div>
+        <div class="d">Hiring manager requests, or TA Partner proposes.</div>
+        <span class="pill b1">Trigger</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Understand the cause" data-c="define" data-d="Before opening a role, we validate the underlying reason — is this growth, backfill, or a capability gap? This keeps headcount intentional.">
+        <div class="ico">🔎</div><div class="t">Understand the why</div>
+        <div class="d">Validate the cause &amp; reason for the hire.</div>
+        <span class="pill b1">Qualify</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Role deep-dive meeting" data-c="define" data-d="A working session with the hiring manager to understand the role in depth — responsibilities, success metrics, and the profile that fits the team.">
+        <div class="ico">🤝</div><div class="t">Role deep-dive</div>
+        <div class="d">Meet hiring manager to scope the role.</div>
+        <span class="pill b1">Align</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="JD + Job Requisition" data-c="define" data-d="We create the Job Description and the Job Requisition. The Requisition is the source of truth — it holds every must-have and nice-to-have, plus the rationale for why each is required.">
+        <div class="ico">📋</div><div class="t">JD &amp; Job Requisition</div>
+        <div class="d">Requisition = single source of must-haves &amp; nice-to-haves.</div>
+        <span class="pill b1">Define</span>
+      </div>
+    </div>
+
+    <!-- COLUMN 2 -->
+    <div class="col c2">
+      <div class="step" data-t="Screen against the Job Requisition" data-c="screen" data-d="Every candidate is measured against the Job Requisition — the source of truth. Hard criteria gate the decision, must-have skills are non-negotiable (each tied to a documented reason), and nice-to-haves add bonus signal.">
+        <div class="ico">📑</div><div class="t">Screen on criteria</div>
+        <div class="d">Hard criteria + must-have (the why) + nice-to-have.</div>
+        <span class="pill b2">Filter</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="ai step" data-t="Claude AI screening — what it actually evaluates" data-c="screen" data-d="Claude AI reviews every applicant against far more than a keyword list:&#10;&#10;• Must-have & nice-to-have skills — matched to the Job Requisition.&#10;• Company & industry background — each past employer is researched and classified (B2B SaaS / messaging, fintech, BPO, telecom, etc.) to gauge how relevant their experience really is.&#10;• Career & tenure patterns — flags job-hopping and short stints.&#10;• Culture fit — remote-async, cross-functional signals.&#10;• Evidence-backed — every claim is tied to a verbatim quote from the resume and tagged stated / inferred / absent, so nothing is hallucinated.&#10;&#10;Result: faster shortlists AND more consistent, accurate scoring at scale.">
+        <span class="spark">✦ AI</span>
+        <div class="ico">⚡</div><div class="t">Claude AI screening</div>
+        <div class="d">Skills + researched company/industry fit + tenure patterns + culture fit — every call backed by a resume quote.</div>
+        <span class="pill b2">Faster + accurate</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Human screen &amp; double-check" data-c="screen" data-d="AI accelerates — it never decides alone. The TA team manually screens and double-checks the AI's shortlist (and spot-checks the rejected pool) so the human touch always stays in the loop. Borderline candidates are verified against the actual resume before anyone moves forward.">
+        <div class="ico">🧑‍💻</div><div class="t">Human double-check</div>
+        <div class="d">TA team reviews &amp; verifies the AI shortlist — human judgement always in the loop.</div>
+        <span class="pill b2">Human touch</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="branch">
+        <b>Fallback:</b> when AI credits run out, we screen the <b>old-school way</b> — fully manual review. The process never stops.<br><br>
+        <b>Qualified shortlist</b> moves to interviews; everyone else enters the <b style="color:#ffb4b4">rejection lane ↓</b>.
+      </div>
+    </div>
+
+    <!-- COLUMN 3 -->
+    <div class="col c3">
+      <div class="step" data-t="HR interview (TABP)" data-c="interview" data-d="The first human conversation — an HR / culture screen led by Aiman, the TA Business Partner (TABP).">
+        <div class="ico">💬</div><div class="t">HR interview · TABP</div>
+        <div class="d">First-round screen led by Aiman (TABP).</div>
+        <span class="pill b3">Round 1</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="branch" data-t="Branch: assessment or direct" data-c="interview">
+        <b>Path depends on the role:</b><br>
+        • <b>With assessment</b> → candidate completes a task → hiring manager reviews → if passed, proceeds.<br>
+        • <b>No assessment</b> → straight to hiring manager.
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Assessment (role-dependent)" data-c="interview" data-d="For roles that require it, the candidate completes a practical assessment. The hiring manager reviews it once finished — only a pass continues to the interview.">
+        <div class="ico">📝</div><div class="t">Assessment</div>
+        <div class="d">Role-dependent task; hiring manager reviews &amp; passes.</div>
+        <span class="pill b3">If applicable</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Hiring manager interview" data-c="interview" data-d="The hiring manager interviews the candidate. Outcome is case-by-case: approve to hire, or escalate to a session with the Head of Department.">
+        <div class="ico">🧭</div><div class="t">Hiring manager interview</div>
+        <div class="d">Approve to offer — or escalate to HOD.</div>
+        <span class="pill b3">Round 2</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="HOD session (case-by-case)" data-c="interview" data-d="For some roles, a final session with the Head of Department. The HOD makes the decision to hire.">
+        <div class="ico">👑</div><div class="t">HOD session</div>
+        <div class="d">Case-by-case; HOD makes the final hire decision.</div>
+        <span class="pill b3">If applicable</span>
+      </div>
+    </div>
+
+    <!-- COLUMN 4 -->
+    <div class="col c4">
+      <div class="step" data-t="Alignment chat (TABP)" data-c="offer" data-d="The TABP has a quick chat with the candidate to align one last time on compensation expectations and gather their thoughts after all the interviews.">
+        <div class="ico">☎️</div><div class="t">Final alignment · TABP</div>
+        <div class="d">Align on amount &amp; candidate's post-interview sentiment.</div>
+        <span class="pill b4">Align</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Offer approval (Slack)" data-c="offer" data-d="An offer request goes to management on Slack — making the case for why we want to hire this person and the proposed compensation. Management approves before any offer is extended.">
+        <div class="ico">✅</div><div class="t">Management approval</div>
+        <div class="d">Offer request on Slack: the why + proposed amount.</div>
+        <span class="pill b4">Approve</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Verbal offer" data-c="offer" data-d="Once approved, we set up a call to extend the offer verbally — a personal touch before anything is on paper.">
+        <div class="ico">🎉</div><div class="t">Verbal offer</div>
+        <div class="d">Offer shared on a call with the candidate.</div>
+        <span class="pill b4">Offer</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Contract signed" data-c="offer" data-d="We send the contract for signature. A signed contract confirms the hire.">
+        <div class="ico">✍️</div><div class="t">Contract signed</div>
+        <div class="d">Send contract → candidate signs.</div>
+        <span class="pill b4">Sign</span>
+      </div>
+      <div class="connector"><svg width="12" height="14"><path d="M6 0V14M6 14l-4-4M6 14l4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+      <div class="step" data-t="Ready to onboard" data-c="offer" data-d="With the contract signed, the new hire is handed to onboarding — ready to start.">
+        <div class="ico">🚀</div><div class="t">Onboarding</div>
+        <div class="d">Signed → ready for onboarding.</div>
+        <span class="pill b4">Welcome</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- rejection lane -->
+  <div class="reject-lane">
+    <div class="badge"><span class="dot"></span> Rejection path · any stage</div>
+    <div class="flow">
+      <span class="chip">Candidate not progressed</span>
+      <span class="arrow">→</span>
+      <span class="chip">Rejection email sent to all</span>
+      <span class="arrow">→</span>
+      <span class="chip">Additional feedback shared on request (case-by-case)</span>
+    </div>
+  </div>
+
+  <!-- detail panel -->
+  <div class="detail" id="detail">
+    <p class="dt">👋 Walk the investors through it</p>
+    <p class="hint">Click any step above and its detail appears here. Read left-to-right: Define → Screen → Interview → Offer &amp; Close. The red lane shows how we treat candidates we don't move forward.</p>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--define)"></i> Define</span>
+    <span><i style="background:var(--screen)"></i> Screen</span>
+    <span><i style="background:var(--interview)"></i> Interview</span>
+    <span><i style="background:var(--offer)"></i> Offer &amp; Close</span>
+    <span><i style="background:var(--accent)"></i> AI-accelerated</span>
+    <span><i style="background:var(--reject)"></i> Rejection path</span>
+  </div>
+
+  <footer>respond.io — internal recruitment process · interactive overview</footer>
+</div>
+
+<script>
+  var cmap={define:'var(--define)',screen:'var(--screen)',interview:'var(--interview)',offer:'var(--offer)'};
+  var detail=document.getElementById('detail');
+  var steps=document.querySelectorAll('.step[data-t], .branch[data-t]');
+  steps.forEach(function(el){
+    el.addEventListener('click',function(){
+      document.querySelectorAll('.step.active').forEach(function(s){s.classList.remove('active')});
+      if(el.classList.contains('step')) el.classList.add('active');
+      var c=el.getAttribute('data-c');
+      var color=cmap[c]||'var(--line)';
+      detail.style.borderColor=color;
+      detail.innerHTML='<p class="dt" style="color:'+color+'">'+
+        (el.getAttribute('data-t'))+'</p><p class="dd">'+
+        (el.getAttribute('data-d')|| el.innerText)+'</p>';
+      detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+  });
+</script>
+</body>
+</html>
